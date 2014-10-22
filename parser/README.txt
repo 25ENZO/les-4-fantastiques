@@ -33,4 +33,5 @@ TODO :
 ### Liste des contributeurs
 M. Tixier (matthieu.tixier@utt.fr)
 E. Jacquot (etienne.jacquot@utt.fr)
+J. Rampin (jeremie.rampin@utt.fr)
 
