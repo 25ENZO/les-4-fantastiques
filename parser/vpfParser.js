@@ -68,7 +68,8 @@ function poi(){
 		expect("END_POI");
 		expect("");
 		return true;
-	}else{
+	}
+	else{
 		err();
 		return false;
 	}
@@ -86,7 +87,6 @@ function body(){
 function name(){
 	expect("name:")
 	var curS = next();
-
 	if(curS.match(/[\w\s]+\s+/i)){
 		return true;
 	}else{
