@@ -79,12 +79,15 @@ function body(){
 	name();
 	expect("");
 	latlng();
+	expect("");
+	note();
 }
 
 function name(){
 	expect("name:")
 	var curS = next();
-	if(curS.match(/[\w\s]+/i)){
+
+	if(curS.match(/[\w\s]+\s+/i)){
 		return true;
 	}else{
 		err();
@@ -97,6 +100,17 @@ function latlng(){
 	if(curS.match(/-?\d+(\.\d+)?;-?\d+(\.\d+)?/)){
 		return true;
 	}else{
+		err();
+	}
+}
+
+function note(){
+	expect("note:")
+	var curS = next();
+	if(curS.match(/[0-5]/)){
+		return true;
+	}
+	else{
 		err();
 	}
 }
