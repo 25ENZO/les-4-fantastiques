@@ -240,6 +240,7 @@ function cleanArray(actual) {
 }
 
 
+// verification si le contact existe déja
 function checkName() {
     var msgContact = "";
     var tmp = "";
