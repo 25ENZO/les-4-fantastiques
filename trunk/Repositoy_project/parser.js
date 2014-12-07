@@ -238,24 +238,69 @@ function cleanArray(actual) {
 }
 
 
+var checkNames;
+function checkName() {
+    var msgContact = "";
+    var tmp = "";
+    var msgEmail = "";
+    var msgTitle = "";
+    var msgOrg = "";
+    for (i = 1; i <= nbrContact; i++) {
+        for (j = 1; j < i; j++) {
+            if (nbrContact > 1 && i != j) {
+ 
+                if (fullName[i] == fullName[j] && fullName[i] != undefined && fullName[j] != undefined) {
+                    msgContact = "Il y a deux contacts portants le même nom : " + "\"" + fullName[j] + "\"";
+                    console.log("***********************************************************************************************");
+                    console.log(msgContact);
+                    if (email[i] == email[j] && email[i] != undefined && email[j] != undefined) {
+                        msgEmail = "la même adresse mail : " + "\"" + email[j] + "\"";
+                        console.log(msgEmail);
+                    }
+                    if (title[i] == title[j] && title[i] != undefined && title[j] != undefined) {
+                        msgTitle = "la même position : " + "\"" + title[j];
+                        console.log(msgTitle);
+                    }
+                    if (org[i] == org[j] && org[i] != undefined && org[j] != undefined) {
+                        msgOrg = "la même organisation : " + "\"" + org[j];
+                        console.log(msgOrg);
+                        break;
+                    }
+                    checkNames = true;
+                }
+            }
+        }
+    }
+    return true;
+}
+ 
+
 function writeCSV() {
     var ligne = [];
-
-
+ 
+ 
+    if(checkNames){
+        console.log("***********************************************************************************************");
+        console.log("***********************************************************************************************");
+        console.log("Le fichier CSV n'a pas été crée, vérifier les informations du fichier vCard")
+    }
     for (i = 1; i <= nbrContact; i++) {
-        if (fName[i] != undefined && lName[i] != undefined) {
-
+ 
+        if (fName[i] != undefined && lName[i] != undefined && !checkNames) {
+ 
             ligne[i] = fName[i] + ";" + lName[i] + ";" + org[i] + ";" + title[i] + ";" + phoneOf(i)[0] + ";" + phoneOf(i)[1] + ";" + email[i] + "\n";
             //console.log(ligne[i]);
+ 
+            fs.appendFile("csvFile.csv", ligne[i], function (err) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    //console.log("le " + i + " a été enregistré ");
+                }
+            });
         }
-
-        fs.appendFile("csvFile.csv", ligne[i], function (err) {
-            if (err) {
-                console.log(err);
-            } else {
-                //console.log("le " + i + " a été enregistré ");
-            }
-        });
+ 
+ 
     }
 }
 
