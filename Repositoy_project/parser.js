@@ -25,6 +25,7 @@ var typeTel = [];
 var telMatrix = [];
 var checkNames = false;
 var checkPhones = false;
+var checkPhonesDoubles = false;
 
 
 /*
@@ -40,10 +41,11 @@ fs.readFile(myArgs[1], 'utf8', function (err, data) {
 
     /* appel fonctions */
     parse_key_value();
+    //console.log(value);
     createcontact();
     cleanTel();
-    checkName();
     checkPhone();
+    checkName();
     writeCSV();
 
     /*
@@ -77,6 +79,8 @@ function parse_key_value() {
                 if (tmp[i][0] != "END" && tmp[i][0] != imax && tmp[i][0] != undefined) {
                     key[i] = tmp[i][0];
                     value[i] = tmp[i][1];
+                    //console.log(key[i]);
+                    //console.log(value[i]);
                     tmp2[i] = key[i].split(';');
                     if (tmp2[i][1] != undefined) {
                         tmp3[i] = tmp2[i][1].split(',');
@@ -91,6 +95,7 @@ function parse_key_value() {
         }
     }
 }
+
 
 //cree les contacts avec les informations : nom, prenom, organisation, title, et numéros de téléphones et leurs types
 function createcontact() {
@@ -112,19 +117,14 @@ function createcontact() {
         }
 
 
-        if (key[i] != undefined && key[i] == "N") {
-
+        if (key[i] != undefined && key[i] == "FN" ) {
             nbrContact++;
-
-
-            tmp1[i] = value[i].split(';');
+            tmp1[i] = value[i].split(' ');
+            //console.log(tmp1[i]);
             fName[nbrContact] = tmp1[i][0];
             lName[nbrContact] = tmp1[i][1].replace("\r", "");
             fullName[nbrContact] = lName[nbrContact] + " " + fName[nbrContact];
-
-
         }
-
 
         while (key[i] == "TEL" && key[i] != "END" && value[i] != undefined) {
             numTel[i] = "(" + value[i].replace('\r', "") + ")" + nbrContact;
@@ -136,8 +136,6 @@ function createcontact() {
             email[nbrContact] = value[i].replace('\r', "");
         }
     }
-
-
 }
 
 //clean la variable numTel et Typetel et les mettre dans un telMatrix
@@ -157,10 +155,7 @@ function cleanTel() {
             tmpType[i] = tmpType[i][0].split('(');
             telMatrix[nbrPhones] = j + tmpType[i] + tmpPhone[i];
             nbrPhones++;
-
         }
-
-
     }
 }
 
@@ -224,8 +219,6 @@ function phoneTypeOf(contactNbr) {
 
     tmp = cleanArray(tmp);
     return tmp;
-
-
 }
 
 //Enleve les valeurs NULL ou undefined d'un tableau
@@ -240,19 +233,18 @@ function cleanArray(actual) {
 }
 
 
-// verification si le contact existe déja
 function checkName() {
     var msgContact = "";
-    var tmp = "";
     var msgEmail = "";
     var msgTitle = "";
     var msgOrg = "";
+
     for (i = 1; i <= nbrContact; i++) {
-        for (j = 1; j < i; j++) {
+        for (j = 0; j < i; j++) {
             if (nbrContact > 1 && i != j) {
 
                 if (fullName[i] == fullName[j] && fullName[i] != undefined && fullName[j] != undefined) {
-                    msgContact = "Il y a deux contacts (numéros " + i + " et " + j + ") portants le même nom : " + "\"" + fullName[j] + "\"";
+                    msgContact = "Il y a deux contacts (numéros " + i + " et " + j + ") portants le même nom : " + "\"" + fName[j] + " " + lName[j] + "\"";
                     console.log("");
                     console.log("********************************************************************************");
                     console.log(msgContact);
@@ -262,27 +254,46 @@ function checkName() {
                         checkNames = true;
                     }
                     if (title[i] != title[j] && title[i] != undefined && title[j] != undefined) {
-                        msgTitle = "deux positions différentes : " + "\"" + title[j] + "et" + "\"" + title[i] + "\"";
+                        msgTitle = "deux positions différentes : " + "\"" + title[j] + " et " + "\"" + title[i] + "\"";
                         console.log(msgTitle);
                         checkNames = true;
                     }
                     if (org[i] != org[j] && org[i] != undefined && org[j] != undefined) {
-                        msgOrg = "deux organisations différentes : " + "\"" + org[j] + "et" + "\"" + org[i] + "\"";
+                        msgOrg = "deux organisations différentes : " + "\"" + org[j] + " et " + "\"" + org[i] + "\"";
                         console.log(msgOrg);
                         checkNames = true;
-                        break;
-                    }
-                    else if (org[i] == org[j] && title[i] == title[j] && email[i] == email[j]) {
-                        console.log("les mêmes adresses mails, organisations, et positions, ils ont donc été fusionné");
-                        fName[j] = undefined;
-                        fName[j] = undefined;
-                        checkNames = false;
                     }
 
+                    if (org[i] == org[j] && title[i] == title[j] && email[i] == email[j] && checkPhonesDoubles == false) {
+                        //console.log(j + " "  + i);
+                        //console.log(phoneOf(i));
+                        //console.log(phoneOf(j));
+                        //console();
+                        console.log("les mêmes adresses mails, organisations, et positions, ils ont donc été fusionné");
+                        fName[j] = undefined;
+                        lName[j] = undefined;
+                    }
+
+                }
+
+                var x = j;
+                var u = i;
+
+                if (fullName[x] == fullName[u] && phoneOf(x)[0] != undefined && phoneOf(x)[1] != undefined && !checkNames) {
+                    if ((phoneOf(x)[0][0] == phoneOf(u)[0][0] && phoneOf(x)[1][0] == phoneOf(u)[1][0]) || (phoneOf(x)[1][0] == phoneOf(u)[0][0] && phoneOf(x)[0][0] == phoneOf(u)[1][0])) {
+                        fName[x] = undefined;
+                        lName[x] = undefined;
+                        console.log("les mêmes numéros de téléphone : " + phoneOf(u)[0][0] + " et " + phoneOf(u)[1][0]);
+                    }
+                    if (phoneOf(x)[0][0] != phoneOf(u)[0][0] || phoneOf(x)[1][0] != phoneOf(u)[1][0]) {
+                        console.log("les contacts " + x + " et " + u + " ont des numéros de téléphone différents ");
+                        checkPhonesDoubles = true;
+                    }
                 }
             }
         }
     }
+
     return true;
 }
 
@@ -307,17 +318,14 @@ function checkPhone() {
             console.log("le contact n° " + i + " a plus que 2 numéros de téléphones");
             for (u = 0; u < nbrPhones; u++) {
                 if (phoneOf(i)[u] != undefined && phoneTypeOf(i)[u] != undefined) {
-                    tmp[i][u] = "Numéro de téléphone : " + phoneOf(i)[u] + " | type " + phoneTypeOf(i)[u];
+                    tmp[i][u] = "Numéro de téléphone : " + phoneOf(i)[u] + " | type : " + phoneTypeOf(i)[u];
                     console.log(tmp[i][u]);
-
                 }
             }
             checkPhones = true;
             console.log("Rappel : un contact ne peut avoir que deux numéros de téléphones maximum ");
-
         }
     }
-
     //return tmp;
 }
 
@@ -326,20 +334,20 @@ function writeCSV() {
     var ligne = [];
 
 
-    if (checkNames || checkPhones) {
+    if (checkNames || checkPhones || checkPhonesDoubles) {
         console.log("");
         console.log("********************************************************************************");
         console.log("********************************************************************************");
         console.log("Le fichier CSV n'a pas été créé, vérifier les informations du fichier vCard");
     }
-    else if (!checkNames && !checkPhones) {
+    else if (!checkNames && !checkPhones && !checkPhonesDoubles) {
         console.log("********************************************************************************");
         console.log("********************************************************************************");
         console.log("Aucun doublon trouvé, Le fichier CSV a été créé");
     }
     for (i = 1; i <= nbrContact; i++) {
 
-        if (fName[i] != undefined && lName[i] != undefined && !checkNames && !checkPhones) {
+        if (fName[i] != undefined && lName[i] != undefined && !checkNames && !checkPhones && !checkPhonesDoubles) {
 
             ligne[i] = fName[i] + ";" + lName[i] + ";" + org[i] + ";" + title[i] + ";" + phoneOf(i)[0] + ";" + phoneOf(i)[1] + ";" + email[i] + "\n";
 
@@ -352,22 +360,4 @@ function writeCSV() {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
