@@ -1,0 +1,39 @@
+BEGIN:VCARD
+BDAY;VALUE=DATE:1963-09-21
+VERSION:3.0
+N:Stenerson;Derik
+FN:Derik Stenerson
+ORG:MicrosoftCorporation
+ADR;TYPE=WORK,POSTAL,PARCEL:;;One Microsoft Way;Redmond;WA;98052-6399;USA
+TEL;TYPE=WORK1,MSG:+1-425-936-5522
+TEL;TYPE=FIXE2,MSG:06 62 82 74 47
+EMAIL;TYPE=INTERNET:deriks@Microsoft.com
+END:VCARD
+BEGIN:VCARD
+VERSION:2.1
+FN:Hassan Laftimi
+N:Hassan;Laftimi
+ORG:Big Company hamza okslkd .
+TEL;home:06 62 82 74 47
+ADR;TYPE=WORK,POSTAL,PARCEL:;;One Microsoft Way;Redmond;WA;98052-6399;USA
+TEL;TYPE=office,MSG:+1-734-542-5955
+END:VCARD
+BEGIN:VCARD
+VERSION:2.1
+FN:Hassan Laftimi
+N:Hassan;Laftimi
+ORG:Big Company hamza okslkd .
+TEL;home:06 62 82 74 47
+TEL;TYPE=office,MSG:+1-734-542-5955
+END:VCARD
+BEGIN:VCARD
+BDAY;VALUE=DATE:1963-09-21
+VERSION:3.0
+N:Stenerson;Derik
+FN:Derik Stenerson
+ORG:MicrosoftCorporation
+ADR;TYPE=WORK,POSTAL,PARCEL:;;One Microsoft Way;Redmond;WA;98052-6399;USA
+TEL;TYPE=WORK1,MSG:+1-425-936-5522
+TEL;TYPE=FIXE2,MSG:06 62 82 74 47
+EMAIL;TYPE=INTERNET:deriks@Microsoft.com
+END:VCARD
