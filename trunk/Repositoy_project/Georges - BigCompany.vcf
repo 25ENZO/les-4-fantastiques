@@ -1,0 +1,11 @@
+BEGIN:VCARD
+VERSION:2.1
+N:BigCompany;Georges;-;;
+FN:Georges - BigCompany
+TEL;CELL:0682271068
+TEL;WORK:0628945687
+TEL;HOME;PREF:0325879614
+EMAIL;PREF;HOME:georges@bigcompany.com
+ORG:BigCompany
+TITLE:Responsable Approvisionnement
+END:VCARD
