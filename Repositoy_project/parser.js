@@ -351,7 +351,10 @@ function writeCSV() {
     var ligne = [];
 	var mobile = [];
 	var tel = [];
-
+	
+	//Nom des colonnes
+	fs.appendFileSync("csvFile.csv", "Nom;Prénom;Organisation;Fonction;Téléphone;Mobile;Courriel\n");
+	
     if (checkNames || checkPhones || checkPhonesDoubles) {
         console.log("");
         console.log("********************************************************************************");
@@ -373,7 +376,7 @@ function writeCSV() {
 		tel[i] = phoneOf(i)[1]
 		tel[i] = deleteUndefined(tel[i]);
 		email[i] = deleteUndefined(email[i]);
-            ligne[i] = fName[i] + ";" + lName[i] + ";" + org[i] + ";" + title[i] + ";" + mobile[i] + ";" + tel[i] + ";" + email[i] + "\n";
+            ligne[i] = lName[i] + ";" + fName[i] + ";" + org[i] + ";" + title[i] + ";" + tel[i] + ";" + mobile[i] + ";" + email[i] + "\n";
 
             fs.appendFileSync("csvFile.csv", ligne[i]);
         }
