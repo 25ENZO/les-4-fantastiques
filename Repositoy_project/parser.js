@@ -364,7 +364,7 @@ function writeCSV() {
     }
     for (i = 1; i <= nbrContact; i++) {
 
-        if (fName[i] != undefined || lName[i] != undefined && !checkNames && !checkPhones && !checkPhonesDoubles) {
+        if (fName[i] != undefined && lName[i] != undefined && !checkNames && !checkPhones && !checkPhonesDoubles) {
 
             ligne[i] = fName[i] + ";" + lName[i] + ";" + org[i] + ";" + title[i] + ";" + phoneOf(i)[0] + ";" + phoneOf(i)[1] + ";" + email[i] + "\n";
 
