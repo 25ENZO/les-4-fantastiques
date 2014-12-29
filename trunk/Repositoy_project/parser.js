@@ -59,7 +59,7 @@ fs.readFile(myArgs[1], 'utf8', function (err, data) {
      */
 
 
-});
+ });
 
 
 //recupere toutes les cles valeurs d'un fichier vCard
@@ -110,6 +110,7 @@ function createcontact() {
         //enregistrement des valeurs dans des tableaux
         if (key[i] == "ORG") {
             org[nbrContact] = value[i].replace('\r', "");
+		
         }
 
         if (key[i] == "TITLE") {
@@ -117,13 +118,29 @@ function createcontact() {
         }
 
 
-        if (key[i] != undefined && key[i] == "FN" ) {
+        if (key[i] != undefined && key[i] == "FN" ) { 
             nbrContact++;
             tmp1[i] = value[i].split(' ');
-            //console.log(tmp1[i]);
-            fName[nbrContact] = tmp1[i][0];
-            lName[nbrContact] = tmp1[i][1].replace("\r", "");
-            fullName[nbrContact] = lName[nbrContact] + " " + fName[nbrContact];
+            
+			if(tmp1[i][1] == undefined)
+			{
+				lName[nbrContact]="";
+				fName[nbrContact] = tmp1[i][0].replace("\r", "");
+				fullName[nbrContact] = tmp1[i][0].replace("\r", "");
+			}
+			else if(tmp1[i][0] == undefined)
+			{
+				fName[nbrContact]="";
+				lName[nbrContact] = tmp1[i][1].replace("\r", "");
+				fullName[nbrContact] = tmp1[i][1].replace("\r", "");
+			}
+			else
+			{
+				fName[nbrContact] = tmp1[i][0];
+				lName[nbrContact] = tmp1[i][1].replace("\r", "");
+				fullName[nbrContact] = lName[nbrContact] + " " + fName[nbrContact];
+			}
+			
         }
 
         while (key[i] == "TEL" && key[i] != "END" && value[i] != undefined) {
@@ -347,7 +364,7 @@ function writeCSV() {
     }
     for (i = 1; i <= nbrContact; i++) {
 
-        if (fName[i] != undefined && lName[i] != undefined && !checkNames && !checkPhones && !checkPhonesDoubles) {
+        if (fName[i] != undefined || lName[i] != undefined && !checkNames && !checkPhones && !checkPhonesDoubles) {
 
             ligne[i] = fName[i] + ";" + lName[i] + ";" + org[i] + ";" + title[i] + ";" + phoneOf(i)[0] + ";" + phoneOf(i)[1] + ";" + email[i] + "\n";
 
