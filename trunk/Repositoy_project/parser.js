@@ -349,7 +349,8 @@ function checkPhone() {
 
 function writeCSV() {
     var ligne = [];
-
+	var mobile = [];
+	var tel = [];
 
     if (checkNames || checkPhones || checkPhonesDoubles) {
         console.log("");
@@ -365,11 +366,27 @@ function writeCSV() {
     for (i = 1; i <= nbrContact; i++) {
 
         if (fName[i] != undefined && lName[i] != undefined && !checkNames && !checkPhones && !checkPhonesDoubles) {
-
-            ligne[i] = fName[i] + ";" + lName[i] + ";" + org[i] + ";" + title[i] + ";" + phoneOf(i)[0] + ";" + phoneOf(i)[1] + ";" + email[i] + "\n";
+		org[i] = deleteUndefined(org[i]);
+		title[i] = deleteUndefined(title[i]);
+		mobile[i] = phoneOf(i)[0]
+		mobile[i] = deleteUndefined(mobile[i]);
+		tel[i] = phoneOf(i)[1]
+		tel[i] = deleteUndefined(tel[i]);
+		email[i] = deleteUndefined(email[i]);
+            ligne[i] = fName[i] + ";" + lName[i] + ";" + org[i] + ";" + title[i] + ";" + mobile[i] + ";" + tel[i] + ";" + email[i] + "\n";
 
             fs.appendFileSync("csvFile.csv", ligne[i]);
         }
     }
 }
+
+function deleteUndefined(data){
+
+	if(data==undefined || data == "undefined"){
+	return data = "";
+	}
+	else return data;
+}
+
+
 
