@@ -351,12 +351,7 @@ function writeCSV() {
 
             ligne[i] = fName[i] + ";" + lName[i] + ";" + org[i] + ";" + title[i] + ";" + phoneOf(i)[0] + ";" + phoneOf(i)[1] + ";" + email[i] + "\n";
 
-            fs.appendFile("csvFile.csv", ligne[i], function (err) {
-                if (err) {
-                    console.log(err);
-                } else {
-                }
-            });
+            fs.appendFileSync("csvFile.csv", ligne[i]);
         }
     }
 }
