@@ -16,3 +16,4 @@ Il génère un fichier contact au format .csv : _csvFile.csv_
 
  * *Parser.js*, programme principal
  * *README.txt*, version condensée expliquant comment lancer l'exécutable
+ * Plusieurs fichiers test au format .vcf
