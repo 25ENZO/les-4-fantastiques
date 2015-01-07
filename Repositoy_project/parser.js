@@ -1,5 +1,7 @@
 /**
  * Created by les-4-fantastiques on 24/11/2014.
+ 
+ Program modified on 07/01/2015 
  */
 
 
@@ -38,28 +40,24 @@ fs.readFile(myArgs[1], 'utf8', function (err, data) {
     }
     input_lines = data.split(/\n/);
 
+if(myArgs[1].substr(myArgs[1].length-4, myArgs[1].length-5)!=".vcf")
+{
+	console.log("Format de fichier invalide, veuillez insérer un fichier .vcf");
+}
+else
+{
 
     /* appel fonctions */
     parse_key_value();
-    //console.log(value);
     createcontact();
     cleanTel();
     checkPhone();
     checkName();
     writeCSV();
 
-    /*
-     Afficher les valeurs enregistrees
-
-     console.log(fullName);
-     console.log(email);
-     console.log(title);
-     console.log(org);
-     console.log(telMatrix);
-     */
-
-
+}
  });
+ 
 
 
 //recupere toutes les cles valeurs d'un fichier vCard
@@ -79,8 +77,6 @@ function parse_key_value() {
                 if (tmp[i][0] != "END" && tmp[i][0] != imax && tmp[i][0] != undefined) {
                     key[i] = tmp[i][0];
                     value[i] = tmp[i][1];
-                    //console.log(key[i]);
-                    //console.log(value[i]);
                     tmp2[i] = key[i].split(';');
                     if (tmp2[i][1] != undefined) {
                         tmp3[i] = tmp2[i][1].split(',');
@@ -220,7 +216,6 @@ function phoneTypeOf(contactNbr) {
 
             if (tmpSplit[j][0] != undefined && tmpSplit[j][1] != undefined && tmpSplit[j][2] != undefined) {
                 c[j] = tmpSplit[j][0];
-                //console.log(c[j]);
                 tmpType[j] = tmpSplit[j][1];
             }
         }
@@ -282,10 +277,6 @@ function checkName() {
                     }
 
                     if (org[i] == org[j] && title[i] == title[j] && email[i] == email[j] && checkPhonesDoubles == false) {
-                        //console.log(j + " "  + i);
-                        //console.log(phoneOf(i));
-                        //console.log(phoneOf(j));
-                        //console();
                         console.log("les mêmes adresses mails, organisations, et positions, ils ont donc été fusionné");
                         fName[j] = undefined;
                         lName[j] = undefined;
