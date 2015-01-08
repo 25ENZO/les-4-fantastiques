@@ -53,7 +53,7 @@ else
     cleanTel();
     checkPhone();
     checkName();
-    writeCSV();
+    writeCSV(myArgs[2]);
 
 }
  });
@@ -338,13 +338,13 @@ function checkPhone() {
 }
 
 
-function writeCSV() {
+function writeCSV(nomFichier) {
     var ligne = [];
 	var mobile = [];
 	var tel = [];
 	
 	//Nom des colonnes
-	fs.appendFileSync("csvFile.csv", "Nom;Prénom;Organisation;Fonction;Téléphone;Mobile;Courriel\n");
+	fs.appendFileSync(nomFichier + ".csv", "Nom;Prénom;Organisation;Fonction;Téléphone;Mobile;Courriel\n");
 	
     if (checkNames || checkPhones || checkPhonesDoubles) {
         console.log("");
@@ -369,7 +369,7 @@ function writeCSV() {
 		email[i] = deleteUndefined(email[i]);
             ligne[i] = lName[i] + ";" + fName[i] + ";" + org[i] + ";" + title[i] + ";" + tel[i] + ";" + mobile[i] + ";" + email[i] + "\n";
 
-            fs.appendFileSync("csvFile.csv", ligne[i]);
+            fs.appendFileSync(nomFichier + ".csv", ligne[i]);
         }
     }
 }
