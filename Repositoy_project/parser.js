@@ -40,12 +40,14 @@ fs.readFile(myArgs[1], 'utf8', function (err, data) {
     }
     input_lines = data.split(/\n/);
 
+            
 if(myArgs[1].substr(myArgs[1].length-4, myArgs[1].length-5)!=".vcf")
 {
 	console.log("Format de fichier invalide, veuillez insérer un fichier .vcf");
 }
 else
 {
+           
 
     /* appel fonctions */
     parse_key_value();
@@ -65,8 +67,8 @@ function parse_key_value() {
     var imax = input_lines.length;
 
     var tmp = [];
-    var tmp2 = []
-    var tmp3 = []
+    var tmp2 = [];
+    var tmp3 = [];
 
 
     for (i = 0; i < imax; i++) {
@@ -287,7 +289,8 @@ function checkName() {
                 var x = j;
                 var u = i;
 
-                if (fullName[x] == fullName[u] && phoneOf(x)[0] != undefined && phoneOf(x)[1] != undefined && !checkNames) {
+                if (fullName[x] == fullName[u] && phoneOf(x)[0] != undefined && phoneOf(x)[1] != undefined && phoneOf(u)[0] != undefined && phoneOf(u)[1] != undefined && !checkNames) {
+                     console.log("here");
                     if ((phoneOf(x)[0][0] == phoneOf(u)[0][0] && phoneOf(x)[1][0] == phoneOf(u)[1][0]) || (phoneOf(x)[1][0] == phoneOf(u)[0][0] && phoneOf(x)[0][0] == phoneOf(u)[1][0])) {
                         fName[x] = undefined;
                         lName[x] = undefined;
@@ -297,6 +300,7 @@ function checkName() {
                         console.log("les contacts " + x + " et " + u + " ont des numéros de téléphone différents ");
                         checkPhonesDoubles = true;
                     }
+                
                 }
             }
         }
@@ -351,11 +355,14 @@ function writeCSV(nomFichier) {
         console.log("********************************************************************************");
         console.log("********************************************************************************");
         console.log("Le fichier CSV n'a pas été créé, vérifier les informations du fichier vCard");
+        console.log("");
     }
     else if (!checkNames && !checkPhones && !checkPhonesDoubles) {
+        console.log("");
         console.log("********************************************************************************");
         console.log("********************************************************************************");
         console.log("Aucun doublon trouvé, Le fichier CSV a été créé");
+        console.log("");
     }
     for (i = 1; i <= nbrContact; i++) {
 
