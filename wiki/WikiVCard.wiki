@@ -9,8 +9,8 @@ Pré requis :
  * node.js
  * un fichier contact au format .vcf.
 Le programme s'exécute via l'invite de commande avec la commande suivante :
-  * *node parser.js <file name>.vcf*
-Il génère un fichier contact au format .csv : _csvFile.csv_
+  * *node parser.js <nom fichier d'entrée> <nom fichier de sortie>*
+Il génère un fichier contact au format .csv : _<nom fichier de sortie>.csv_
 
 = Organisation des ressources =
 
