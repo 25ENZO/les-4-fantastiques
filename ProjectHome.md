@@ -1,0 +1,1 @@
+Projet concernant la manipulation de données autour des vCard, en Javascript. Projet pour l'UV GL02, semestre A14, Université de Technologie de Troyes
